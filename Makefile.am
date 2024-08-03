@@ -3,7 +3,7 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = $(CONFIG_SUBDIRS)
 
 warningflags = -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers
-commonflags = -O2 $(warningflags) $(DEBUGCFLAGS) $(PTHREAD_CFLAGS)
+commonflags = $(warningflags) $(DEBUGCFLAGS) $(PTHREAD_CFLAGS)
 graphengineflags = -I$(srcdir)/graphengine/include -DGRAPHENGINE_IMPL_NAMESPACE=zimg
 AM_CXXFLAGS = -std=$(CXXSTD) $(commonflags)
 AM_CFLAGS = -std=c89 $(commonflags)

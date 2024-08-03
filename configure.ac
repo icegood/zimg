@@ -28,9 +28,6 @@ AC_LANG_POP([C++])
 
 AC_SUBST([CXXSTD], [$CXXSTD])
 
-AX_CHECK_COMPILE_FLAG([-fvisibility=hidden],
-                      [CFLAGS="-fvisibility=hidden $CFLAGS" CXXFLAGS="-fvisibility=hidden $CXXFLAGS"])
-
 AX_PTHREAD(, AC_MSG_WARN([Unable to find pthread. Testapp will be single-threaded.]))
 AS_IF([test "x$PTHREAD_CC" != "x"], [CC="$PTHREAD_CC"])
 
@@ -52,8 +49,13 @@ AS_IF([test "x$enable_unit_test" = "xyes"],
 
 
 AS_IF([test "x$enable_debug" = "xyes"],
-      [AC_SUBST([DEBUGCFLAGS], ["-O0 -g3 -ggdb"])],
-      [AC_SUBST([DEBUGCFLAGS], ["-DNDEBUG"])])
+      [AC_SUBST([DEBUGCFLAGS], ["-g"])],
+      [
+        AC_SUBST([DEBUGCFLAGS], ["-DNDEBUG"])
+        AX_CHECK_COMPILE_FLAG([-fvisibility=hidden],
+                      [CFLAGS="-fvisibility=hidden $CFLAGS" CXXFLAGS="-fvisibility=hidden $CXXFLAGS"])
+
+        ])
 
 AS_IF([test "x$STL_LIBS" = "x"], [STL_LIBS="-lstdc++"])
 AC_SUBST([STL_LIBS], [$STL_LIBS])
